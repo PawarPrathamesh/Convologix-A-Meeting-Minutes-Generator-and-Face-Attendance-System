@@ -90,7 +90,7 @@ ConvoLogix addresses all of these with a single automated system.
 ConvoLogix/
 │
 ├── Code/                    # Source code for all modules
-├── Dataset/                 # Face recognition image dataset
+├── Dataset/                 # Face recognition image dataset (not included — see Privacy Notice)
 ├── Extracted Audio/         # Audio files separated from video
 ├── Minutes of Meeting/      # Auto-generated meeting summaries
 ├── Trained Model/           # Pre-trained CNN & LBPH model files
@@ -165,23 +165,35 @@ ConvoLogix
 
 ## ⚠️ Privacy & Data Notice
 
-The `Dataset/` folder in this repository contains **personal biometric facial images** used solely for training and demonstration purposes.
+The `Dataset/` folder is **not included in this repository**. It has been intentionally excluded to protect personal biometric data.
 
-**The following are strictly prohibited:**
-- Copying, sharing, or redistributing any images from the dataset
-- Using these images to train other models or systems
-- Reproducing or repurposing the data in any commercial or non-academic context
+### 🔧 Setting Up Your Own Dataset
+To use this project, populate the `Dataset/` folder locally yourself:
 
-This data is restricted to running this project locally for **academic evaluation only**.
-
-### 🔒 For Contributors & Forks
-> If you are forking or deploying this project, **do not commit real personal photos** to your repository.  
-> Populate the `Dataset/` folder locally and add it to `.gitignore` to keep your biometric data off public servers.
-
-Add the following to your `.gitignore`:
+1. Create a folder named `Dataset/` in the project root
+2. Add a subfolder for each person, named after them:
 ```
 Dataset/
+├── Person_1/
+│   ├── img1.jpg
+│   ├── img2.jpg
+│   └── ...
+├── Person_2/
+│   └── ...
 ```
+3. Add at least **20–30 clear, well-lit face images** per person for best accuracy
+
+### 🔒 For Contributors & Forks
+> **Do not commit real personal photos** to your repository.  
+> Add `Dataset/` to your `.gitignore` to prevent accidental uploads:
+> ```
+> Dataset/
+> ```
+
+**The following are strictly prohibited:**
+- Sharing or redistributing personal facial images via this or any public repo
+- Using others' images without their explicit consent
+- Repurposing any biometric data outside of local academic use
 
 ---
 
