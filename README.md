@@ -203,4 +203,4 @@ This project is for academic and educational purposes. Please review the reposit
 
 ---
 
-> Built with ❤️ to make meetings smarter, not harder.
+> Built with ❤️ to make meetings smarter.
