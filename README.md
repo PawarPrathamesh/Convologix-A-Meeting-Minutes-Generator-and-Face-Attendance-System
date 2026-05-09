@@ -163,6 +163,28 @@ ConvoLogix
 
 ---
 
+## ⚠️ Privacy & Data Notice
+
+The `Dataset/` folder in this repository contains **personal biometric facial images** used solely for training and demonstration purposes.
+
+**The following are strictly prohibited:**
+- Copying, sharing, or redistributing any images from the dataset
+- Using these images to train other models or systems
+- Reproducing or repurposing the data in any commercial or non-academic context
+
+This data is restricted to running this project locally for **academic evaluation only**.
+
+### 🔒 For Contributors & Forks
+> If you are forking or deploying this project, **do not commit real personal photos** to your repository.  
+> Populate the `Dataset/` folder locally and add it to `.gitignore` to keep your biometric data off public servers.
+
+Add the following to your `.gitignore`:
+```
+Dataset/
+```
+
+---
+
 ## 📄 License
 
 This project is for academic and educational purposes. Please review the repository for licensing details before use in production or commercial applications.
