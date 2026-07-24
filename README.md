@@ -238,6 +238,10 @@ For public release, publish from a clean root-history branch like `codex/v2-rele
 - Run `scripts/beta-readiness.py` after admin setup.
 - Upload a real multi-speaker meeting and inspect "Who Said What", attendance, report downloads, and email delivery.
 
+## Study Guide
+
+For interview preparation or onboarding a new developer, read [docs/interview-study-guide.md](docs/interview-study-guide.md). It explains the full system design, backend services, frontend flow, Docker/CI setup, security decisions, limitations, roadmap, and interview talking points.
+
 ## License And Use
 
 This project began as an academic/educational system. Review repository licensing and privacy obligations before using it with real participants or in production. Always get consent before processing face images, voice recordings, or meeting transcripts.
