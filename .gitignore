@@ -1,0 +1,36 @@
+# Local editor and notebook metadata
+.idea/
+.ipynb_checkpoints/
+.gitignore.txt
+
+Trained Model/Trainer.yml
+Required Files/Demo-Europarl-EN.pcl
+
+# Local Python environments
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+Mail App Password.txt
+
+# Personal biometric data and generated runtime artifacts
+Dataset/
+Testing/
+Test Accuracy/
+Extracted Audio/
+Minutes of Meeting/
+Video ScreenShots/
+Trained Model/
+data/
+
+# Large model binaries should be mounted or stored as release artifacts.
+models/*
+!models/README.md
+*.h5
+*.onnx
+*.pkl
+*.pcl
+Accuracy Graph.png

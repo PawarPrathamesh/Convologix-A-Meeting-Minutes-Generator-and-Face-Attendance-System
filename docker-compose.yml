@@ -1,0 +1,62 @@
+services:
+  api:
+    build:
+      context: ./backend
+      args:
+        INSTALL_DIARIZATION: ${CONVOLOGIX_INSTALL_DIARIZATION:-false}
+    environment:
+      CONVOLOGIX_DATA_DIR: /app/data
+      CONVOLOGIX_FACE_DETECTOR_MODEL: /app/models/face_detection_yunet_2023mar.onnx
+      CONVOLOGIX_FACE_RECOGNITION_MODEL: /app/models/face_recognition_sface_2021dec.onnx
+      CONVOLOGIX_FACE_MATCH_THRESHOLD: "0.62"
+      CONVOLOGIX_AUTH_ENABLED: ${CONVOLOGIX_AUTH_ENABLED:-true}
+      CONVOLOGIX_AUTH_SECRET_KEY: ${CONVOLOGIX_AUTH_SECRET_KEY:-}
+      CONVOLOGIX_AUTH_TOKEN_MINUTES: ${CONVOLOGIX_AUTH_TOKEN_MINUTES:-720}
+      CONVOLOGIX_BOOTSTRAP_ADMIN_EMAIL: ${CONVOLOGIX_BOOTSTRAP_ADMIN_EMAIL:-}
+      CONVOLOGIX_BOOTSTRAP_ADMIN_PASSWORD: ${CONVOLOGIX_BOOTSTRAP_ADMIN_PASSWORD:-}
+      CONVOLOGIX_BOOTSTRAP_ADMIN_NAME: ${CONVOLOGIX_BOOTSTRAP_ADMIN_NAME:-}
+      CONVOLOGIX_ASR_MODEL: small.en
+      CONVOLOGIX_ASR_DEVICE: cpu
+      CONVOLOGIX_ASR_COMPUTE_TYPE: int8
+      CONVOLOGIX_DIARIZATION_MODEL: pyannote/speaker-diarization-3.1
+      CONVOLOGIX_ATTENDANCE_SAMPLE_INTERVAL_SECONDS: "20"
+      CONVOLOGIX_ATTENDANCE_MAX_FRAMES: "30"
+      CONVOLOGIX_CORS_ORIGINS: http://localhost:5180,http://127.0.0.1:5180,http://localhost:5173,http://127.0.0.1:5173
+      CONVOLOGIX_SMTP_HOST: ${CONVOLOGIX_SMTP_HOST:-}
+      CONVOLOGIX_SMTP_PORT: ${CONVOLOGIX_SMTP_PORT:-587}
+      CONVOLOGIX_SMTP_USERNAME: ${CONVOLOGIX_SMTP_USERNAME:-}
+      CONVOLOGIX_SMTP_PASSWORD: ${CONVOLOGIX_SMTP_PASSWORD:-}
+      CONVOLOGIX_SMTP_FROM_EMAIL: ${CONVOLOGIX_SMTP_FROM_EMAIL:-}
+      CONVOLOGIX_SMTP_USE_TLS: ${CONVOLOGIX_SMTP_USE_TLS:-true}
+      HUGGINGFACE_TOKEN: ${HUGGINGFACE_TOKEN:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models:ro
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=5).read()"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - api
+    ports:
+      - "5180:80"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "wget -qO- http://127.0.0.1/ >/dev/null || exit 1"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

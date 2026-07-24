@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  release-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Security check
+        run: python scripts/security-check.py
+
+      - name: Python syntax check
+        run: python -m compileall backend/app scripts
+
+      - name: Frontend syntax check
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check frontend JavaScript
+        run: node --check frontend/app.js
+
+      - name: Validate Docker Compose
+        run: docker compose config --quiet
+
+      - name: Build Docker images
+        env:
+          CONVOLOGIX_INSTALL_DIARIZATION: "false"
+        run: docker compose build api frontend
+
+      - name: Run API tests in image
+        run: docker compose run --rm -e PYTHONPATH=/app api python -m unittest discover -s tests

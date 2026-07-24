@@ -1,0 +1,26 @@
+Libraries:
+
+1)Module 1:-
+moviepy
+spleeter
+pydub
+speech_recognition
+transformers
+
+2)Module 2:-
+imageio
+keras
+cv2
+
+
+3)Overall:-
+
+tkinter
+numpy
+os
+datetime
+
+
+4)Sendimg Mail:-
+email
+smtplib

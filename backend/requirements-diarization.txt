@@ -1,0 +1,3 @@
+# Optional speaker diarization stack. It is intentionally separate because it
+# pulls a heavy PyTorch/PyAnnote dependency tree.
+pyannote.audio==3.3.2

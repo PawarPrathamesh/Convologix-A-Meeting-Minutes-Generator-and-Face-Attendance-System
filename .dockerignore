@@ -1,0 +1,22 @@
+.git/
+.env
+.idea/
+.ipynb_checkpoints/
+venv/
+.venv/
+__pycache__/
+*.pyc
+Dataset/
+Testing/
+Test Accuracy/
+Extracted Audio/
+Minutes of Meeting/
+Video ScreenShots/
+Trained Model/
+models/
+*.h5
+*.onnx
+*.pkl
+*.mp4
+*.wav
+*.mp3

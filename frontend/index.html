@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ConvoLogix v2</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <section class="auth-screen" id="auth-screen">
+      <div class="auth-panel">
+        <div class="brand auth-brand">
+          <div class="brand-mark">CL</div>
+          <div>
+            <h1>ConvoLogix</h1>
+            <p>Version 2.0 workspace</p>
+          </div>
+        </div>
+        <div class="auth-copy">
+          <p class="eyebrow">Secure access</p>
+          <h2 id="auth-title">Sign in</h2>
+        </div>
+        <form class="auth-form" id="login-form">
+          <label>
+            Email
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            Password
+            <input name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button class="primary-action" type="submit">Sign In</button>
+        </form>
+        <form class="auth-form hidden" id="setup-form">
+          <label>
+            Admin name
+            <input name="display_name" type="text" autocomplete="name" required />
+          </label>
+          <label>
+            Admin email
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            Password
+            <input name="password" type="password" autocomplete="new-password" minlength="10" required />
+          </label>
+          <button class="primary-action" type="submit">Create Admin</button>
+        </form>
+        <div class="result-band hidden" id="auth-result"></div>
+      </div>
+    </section>
+
+    <div class="app-shell hidden" id="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">CL</div>
+          <div>
+            <h1>ConvoLogix</h1>
+            <p>Version 2.0 workspace</p>
+          </div>
+        </div>
+
+        <nav class="tabs" aria-label="Primary">
+          <button class="tab active" data-tab="meetings" type="button">
+            <span class="tab-icon">+</span>
+            Meetings
+          </button>
+          <button class="tab" data-tab="enrollment" data-min-role="admin" type="button">
+            <span class="tab-icon">ID</span>
+            Enrollment
+          </button>
+          <button class="tab" data-tab="recognition" data-min-role="member" type="button">
+            <span class="tab-icon">?</span>
+            Recognition
+          </button>
+          <button class="tab" data-tab="system" type="button">
+            <span class="tab-icon">*</span>
+            System
+          </button>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Meeting intelligence dashboard</p>
+            <h2 id="page-title">Meetings</h2>
+          </div>
+          <div class="topbar-actions">
+            <div class="status-pill" id="system-status">Checking API</div>
+            <div class="user-pill">
+              <span id="user-badge">Signed out</span>
+              <button class="secondary-action compact-action" id="logout-button" type="button">Sign Out</button>
+            </div>
+          </div>
+        </header>
+
+        <section class="panel active" id="meetings">
+          <div class="section-header">
+            <div>
+              <h3>Upload Meeting</h3>
+              <p>Store a meeting recording for the v2 processing pipeline.</p>
+            </div>
+          </div>
+          <form class="form-grid" id="meeting-form" data-min-role="member">
+            <label>
+              Meeting title
+              <input name="title" type="text" placeholder="Sprint review" />
+            </label>
+            <label>
+              Meeting video
+              <input name="file" type="file" accept="video/*" required />
+            </label>
+            <button class="primary-action" type="submit">
+              <span>Upload</span>
+            </button>
+          </form>
+          <div class="action-row">
+            <button class="secondary-action hidden" id="process-meeting-button" data-min-role="member" type="button">Process Speech</button>
+            <button class="secondary-action" id="refresh-meetings-button" type="button">Refresh Meetings</button>
+          </div>
+          <div class="result-band" id="meeting-result"></div>
+          <div class="split-layout meeting-workspace">
+            <div>
+              <h4>Recent Meetings</h4>
+              <div class="meeting-list" id="meeting-list"></div>
+            </div>
+            <div>
+              <h4>Selected Result</h4>
+              <div class="meeting-status-card" id="selected-meeting-status"></div>
+            </div>
+          </div>
+          <div class="meeting-output" id="meeting-output"></div>
+        </section>
+
+        <section class="panel" id="enrollment" data-min-role="admin">
+          <div class="section-header">
+            <div>
+              <h3>Enroll Attendees</h3>
+              <p>Upload face images. The backend stores them and rebuilds the embedding gallery.</p>
+            </div>
+          </div>
+          <form class="form-grid" id="enroll-form">
+            <label>
+              Person name
+              <input name="person_name" type="text" placeholder="Anushka" required />
+            </label>
+            <label>
+              Face images
+              <input name="files" type="file" accept="image/*" multiple required />
+            </label>
+            <button class="primary-action" type="submit">
+              <span>Enroll</span>
+            </button>
+          </form>
+          <div class="split-layout">
+            <div>
+              <h4>Gallery</h4>
+              <div class="gallery-list" id="gallery-list"></div>
+            </div>
+            <div class="result-band" id="enroll-result"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="recognition" data-min-role="member">
+          <div class="section-header">
+            <div>
+              <h3>Recognition Check</h3>
+              <p>Test the pretrained embedding model against an image before wiring it into videos.</p>
+            </div>
+          </div>
+          <form class="form-grid" id="recognize-form">
+            <label>
+              Image
+              <input name="file" type="file" accept="image/*" required />
+            </label>
+            <button class="primary-action" type="submit">
+              <span>Recognize</span>
+            </button>
+          </form>
+          <div class="recognition-results" id="recognition-results"></div>
+        </section>
+
+        <section class="panel" id="system">
+          <div class="section-header">
+            <div>
+              <h3>Runtime Settings</h3>
+              <p>Point the dashboard at a local or Dockerized API.</p>
+            </div>
+          </div>
+          <form class="settings-row" id="settings-form">
+            <label>
+              API base URL
+              <input id="api-base-input" type="url" />
+            </label>
+            <button class="secondary-action" type="submit">Save</button>
+          </form>
+          <div class="action-row">
+            <button class="secondary-action" id="diarization-check-button" data-min-role="admin" type="button">Check Diarization Access</button>
+          </div>
+          <div class="result-band" id="diarization-check-result"></div>
+          <div class="admin-users" id="admin-users" data-min-role="admin">
+            <h4>User Access</h4>
+            <form class="user-form" id="user-form">
+              <label>
+                Name
+                <input name="display_name" type="text" placeholder="Team member" required />
+              </label>
+              <label>
+                Email
+                <input name="email" type="email" placeholder="person@example.com" required />
+              </label>
+              <label>
+                Role
+                <select name="role" required>
+                  <option value="member">Member</option>
+                  <option value="viewer">Viewer</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </label>
+              <label>
+                Password
+                <input name="password" type="password" minlength="10" required />
+              </label>
+              <button class="secondary-action" type="submit">Add User</button>
+            </form>
+            <div class="result-band hidden" id="user-result"></div>
+            <div class="user-list" id="user-list"></div>
+          </div>
+          <div class="model-grid" id="model-status"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
